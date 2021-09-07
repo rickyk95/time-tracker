@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="./css/index.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <title>Work Tracker</title>
+    </head>
+
+    <body>     
+              <h1 class="display-3 text-center text-white">Work Tracker</h1>
+              <h2 class="text-center text-white">Place productivity in your hands</h2>
+                <div id="menu" class="mx-3">    
+                         <form action="./saveTime" method="POST" class="my-1">
+                            <input name="time" type="text" value="" style="display:none;">
+                            <button class="btn ">
+                                Save Time
+                            </button> 
+                        </form>
+                        <button class="btn btn-primary">Dashboard</button>     
+                      <h6 class="text-left">Hours worked:</h6>
+                      <h6 class="text-left">Weekly target:</h6>  
+                      <h6 class="text-left">Remaining hours:</h6>                 
+                </div>
+                    
+              
+                   
+                        <div id="timer">
+                            <h1 class="display-3"></h1>             
+                            <div class="circle">
+                                <video width="700px"  autoplay muted  loop>
+                                    <source  src="./videos/working.mp4" type="video/mp4">                            
+                                </video>
+                            </div>                       
+                        </div>
+                  
+        
+              
+            <div class="controls mt-5">
+                <button class="btn btn-primary">
+                    Start Timer
+                </button>
+                <button class="btn btn-primary">
+                    Stop Timer
+                </button>      
+                <button class="btn btn-primary">
+                    Reset Timer
+                </button>
+            </div> 
+        <script src="./js/index.js">
+
+        </script>
+    </body>
+
+</html>
