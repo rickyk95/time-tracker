@@ -11,22 +11,25 @@
 
     <body>     
               <h1 class="display-3 text-center text-white">Work Tracker</h1>
-              <h2 class="text-center text-white">Place productivity in your hands</h2>
+              <h2 class="text-center text-white">Place productivity in your hands</h2>  
                 <div id="menu" class="mx-3">    
                          <form action="./saveTime" method="POST" class="my-1">
                             <input name="time" type="text" value="" style="display:none;">
-                            <button class="btn ">
+                            <button class="btn">
                                 Save Time
                             </button> 
                         </form>
-                        <button class="btn btn-primary">Dashboard</button>     
+                        <button class="btn btn-primary"><a style="color:white;"href="/dashboard">Dashboard</a></button>     
                       <h6 class="text-left">Hours worked:</h6>
-                      <h6 class="text-left">Weekly target:</h6>  
-                      <h6 class="text-left">Remaining hours:</h6>                 
-                </div>
-                    
-              
-                   
+                      <h6 class="text-left">Weekly target:{{goal}}</h6>  
+                      <h6 class="text-left">Remaining hours:</h6>   
+                      
+                    <form id="addGoal" action="addGoal" method="POST">
+                        <label for="goal">Weekly Goal (hrs)</label>
+                        <input placeholder="e.g. 30 " type="number" name="goal">
+                        <button class="btn">Add Weekly Goal</button>
+                    </form>              
+                </div>    
                         <div id="timer">
                             <h1 class="display-3"></h1>             
                             <div class="circle">
@@ -34,23 +37,19 @@
                                     <source  src="./videos/working.mp4" type="video/mp4">                            
                                 </video>
                             </div>                       
-                        </div>
-                  
-        
-              
+                        </div>            
             <div class="controls mt-5">
                 <button class="btn btn-primary">
                     Start Timer
                 </button>
-                <button class="btn btn-primary">
+                <button disabled class="btn btn-primary">
                     Stop Timer
                 </button>      
-                <button class="btn btn-primary">
+                <button disabled class="btn btn-primary">
                     Reset Timer
                 </button>
             </div> 
         <script src="./js/index.js">
-
         </script>
     </body>
 

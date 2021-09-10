@@ -23,37 +23,47 @@
 
         <div class="col-6">
           
-            <h3 class="text-left text-white my-5 mx-5">Time worked:20 hours</h3>
+            <h3 class="text-left text-white my-5 mx-5">Time worked:{{total}} hours</h3>
             <h3 class="text-left text-white my-5 mx-5">Completed weekly goal:50%</h3>
             <h3 class="text-left text-danger my-5 mx-5">Time left for weekly goal: 20 hours</h3> 
+            <form class="ml-5" action="/week" method="POST">
+                <select name="scope" id="scope">
+                    <option value="thisWeek">This Week</option>
+                    <option value="weeks">Last 4 Weeks</option>
+                </select>
+            </form>
         </div>
+
+        
 
         <div class="col-6">
             <canvas id="results"></canvas>
         </div>
-
-
     </div>
-
-    
-
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 
     <script>
+        let days = [];
+        let hours = [];
+         {{{currentWeekDays}}}.map((day)=>{
+            days.push(day.day)
+            hours.push(day.hours)
+        })
         var canvas = document.getElementById("results");
         canvas.display="inline-block"
         canvas.width = 500
         canvas.height = 500
         var ctx = canvas.getContext("2d");
+
         var myChart = new Chart(ctx, {
     type: 'bar',
     data: {
-        labels: ['Monday', 'Tuesday', 'Wednesday', 'Green', 'Purple', 'Orange'],
+        labels: days,
         datasets: [{
             label: 'Day',
-            data: [12, 19, 3, 5, 2, 3],
+            data: hours,
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',

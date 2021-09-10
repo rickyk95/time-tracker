@@ -53,10 +53,10 @@
  function getDate(){
     let date = new Date()
     let today = {
-        day:date.getDate(),
+        day:9,
         month:date.getMonth(),
         year:date.getFullYear(),
-        weekday:date.getDay()
+        weekday:4
     }
     return today
 }
@@ -69,7 +69,6 @@ function daysFromMonday(weekday){
    }
    return difference;
 }
-
 
  function findNearestMonday(){
     let today = getDate()
@@ -86,8 +85,6 @@ function daysFromMonday(weekday){
             year--
             continue
          }
-
-         console.log('Its the 1st');
          month = months[today.month-1]
          day = month.days
          weekday = days[i] 
@@ -100,7 +97,6 @@ function daysFromMonday(weekday){
     } 
 
     return  `${weekday},${month.month},${day+1},${year}` 
- 
 
 }
 

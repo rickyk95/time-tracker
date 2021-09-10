@@ -1,8 +1,8 @@
 const timer = document.querySelector('#timer h1');
-const button = document.querySelectorAll('button')[2];
-const stop = document.querySelectorAll('button')[3];
-const reset = document.querySelectorAll('button')[4];
-const store = document.querySelectorAll('button')[5];
+const button = document.querySelectorAll('button')[3];
+const stop = document.querySelectorAll('button')[4];
+const reset = document.querySelectorAll('button')[5];
+const store = document.querySelectorAll('button')[6];
 const img = document.querySelector('#timer .circle');
 const form = document.querySelector('form');
 const input = document.querySelector('form input');
@@ -11,7 +11,14 @@ let minutes=55;
 let hours=0;
 var interval;
 form.addEventListener('submit',(e)=>{
-  input.value=timer.innerText;
+
+  let innerText = input.value=timer.innerText;
+  
+  if(innerText === ''){
+      e.preventDefault()
+      console.log('this is not a number sir')
+      window.location.href="/"
+  }
 })
 
 function startTimer(){
@@ -96,6 +103,8 @@ function startTimer(){
         //  timer.style.display="block";
      		 interval = setInterval(startTimer,100)
          button.setAttribute('disabled',true)
+         reset.removeAttribute('disabled')
+         stop.removeAttribute('disabled')
      }) 
      
      stop.addEventListener('click',()=>{
@@ -107,6 +116,7 @@ function startTimer(){
    	  seconds=0;
       minutes=0;
       hours=0;
+      reset.setAttribute('disabled',true)
       button.removeAttribute('disabled')
       clearInterval(interval);
       timer.innerHTML='00:00:00';

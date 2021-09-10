@@ -1,56 +1,47 @@
 const express = require('express')
 const router =  express.Router()
 const { giveMeDB } = require('../db/mongodb');
-const {parseTime, addTime }= require('../js/addTime')
+const {parseTime }= require('../js/parseTime')
 const getToday = require('../js/getToday')
-const {findNearestMonday} = require('../js/locateWeek')
+const getCurrentWeek = require('../js/getCurrentWeek')
+
 router.use(express.urlencoded({extended:false}))
 let files = '/Users/ricky/Desktop/portfolio/pet-projects/timer/';
 const insertTime = require('../js/insertTime')
+const addTime = require('../js/addTime')
+
 router.use(express.static(files))
 
 
-router.get('/success', async (req,res)=>{
-    let db = giveMeDB()
-    let calendar = db.collection('calendar')
-    let today = getToday()
-    let nearestMonday = findNearestMonday()
-    console.log(nearestMonday,'2000')
-    let week = await calendar.findOne({weekOf:nearestMonday})
-    if(!week){
-        await calendar.insertOne({weekOf:findNearestMonday(),week:[{
-            day:today,
-            month:new Date().getMonth(),
-            timeWorked:8
-        }]})
-        console.log('million')
-    }else{
-        let weekDays = week.week;
-        for(day of weekDays){
-           if(day.day === today){
-             day.timeWorked=500
-             await calendar.updateOne({weekOf:nearestMonday},{$set:{week:weekDays}})
-           }else{
-            await calendar.updateOne({weekOf:nearestMonday},{$push:{week:{day:today,hoursWorked:900}}})
-           }
-        }
-    }
-
+router.get('/dashboard', async (req,res)=>{
+    let { currentWeekDays,total } = await getCurrentWeek()
+    currentWeekDays = JSON.stringify(currentWeekDays)
+    res.render('dashboard',{layout:false,currentWeekDays,total:total.hours})
 })
+
 
 router.post('/saveTime', async (req,res)=>{
-    // let x = parseTime(req.body.time)
-    // let db = giveMeDB()
-    // let calendar = db.collection('calendar')
-    // let z = await calendar.find({}).toArray()
-    // console.log(z)
-    findNearestMonday()
-    res.send('hello there') 
+    const {seconds,minutes,hours} = parseTime(req.body.time)
+    addTime(seconds,minutes,hours)
+    res.send('<h1>Your time has been saved </h1>')
 })
 
+router.post('/addGoal',async (req,res)=>{
+    let db = giveMeDB();
+    let calendar = db.collection('calendar')
+    let weeks = await calendar.find({}).toArray()
+    let thisWeek = weeks[weeks.length-1]
+    let goal = parseInt(req.body.goal)
+    await calendar.updateOne({weekOf:thisWeek.weekOf},{$set:{goal}} )
+    res.send('<h1>Goal Added </h1>')
+})
 
-router.get('/',(req,res)=>{
-    res.render('index',{layout:false})
+router.get('/',async (req,res)=>{
+    let db = giveMeDB();
+    let calendar = db.collection('calendar')
+    let weeks = await calendar.find({}).toArray()
+    let thisWeek = weeks[weeks.length-1]
+    res.render('index',{layout:false,goal:thisWeek.goal})
 })
 
 
